@@ -1,5 +1,5 @@
 const createDateFormatter = (locale: string = 'en-US') => {
-    return new Intl.DateTimeFormat(locale, {
+  return new Intl.DateTimeFormat(locale, {
       year: 'numeric',
       month: '2-digit',
       day: '2-digit',
@@ -7,12 +7,22 @@ const createDateFormatter = (locale: string = 'en-US') => {
       minute: '2-digit',
       second: '2-digit',
       hour12: false,
-    });
-  };
-  
-const formatDate = (date: string | Date, locale: string = 'en-US'): string => {
-    const formatter = createDateFormatter(locale);
-    return formatter.format(new Date(date));
-  };
+  });
+};
 
-  export default formatDate;
+const formatDate = (date: string | Date, locale: string = 'en-US'): string => {
+  try {
+      const formatter = createDateFormatter(locale);
+      const parsedDate = new Date(date);
+
+      if (isNaN(parsedDate.getTime())) {
+          throw new Error('Invalid Date');
+      }
+
+      return formatter.format(parsedDate);
+  } catch (error) {
+      return 'Time not valid';
+  }
+};
+
+export default formatDate;
