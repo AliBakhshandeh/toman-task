@@ -1,5 +1,10 @@
+import Loadable from '@/components/loadable';
 import MainLayout from '@/layouts/main';
-import PaymentsPage from '@/pages/payments';
+import { lazy } from 'react';
+
+const PaymentsPage = Loadable(lazy(() => import('@/pages/payments')));
+const PaymentDetailPage = Loadable(lazy(() => import('@/pages/paymentDetail')));
+const NotFoundPage = Loadable(lazy(() => import('@/pages/errors/notFound')));
 
 const PaymentsRoutes = {
   path: '/',
@@ -8,6 +13,14 @@ const PaymentsRoutes = {
     {
       path: '/',
       element: <PaymentsPage />,
+    },
+    {
+      path: '/payment-detail/:id',
+      element: <PaymentDetailPage />,
+    },
+    {
+      path: '*',
+      element: <NotFoundPage />,
     },
   ],
 };
