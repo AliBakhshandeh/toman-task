@@ -1,8 +1,6 @@
 import { cn } from '@/utils';
-interface ISpinnerProps {
-  color?: string;
-  size?: number;
-}
+import { ISpinnerProps } from './spinner.types';
+
 const Spinner = ({ color = 'fill-blue-600', size = 40 }: ISpinnerProps) => {
   return (
     <div role="status">

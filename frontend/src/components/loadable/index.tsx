@@ -1,5 +1,5 @@
 import { Suspense, ComponentType } from 'react';
-import Spinner from '@/components/ui-components/spinner';
+import { Spinner } from '@/components/ui-components';
 
 const Loadable = <P extends object>(Component: ComponentType<P>) => {
   return (props: P) => (

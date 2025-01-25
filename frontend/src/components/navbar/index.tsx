@@ -1,30 +1,27 @@
-import { useLocation, useNavigate } from 'react-router';
+import { NavbarTitleContext } from '@/contexts/navbarTitle';
+import { useContext } from 'react';
 import { CiSquareChevRight } from 'react-icons/ci';
-import dictRoutesList from '@/routes/dictRoutesList';
+import { useLocation, useNavigate } from 'react-router';
 
 const Navbar = () => {
   const location = useLocation();
   const navigate = useNavigate();
-
-  const currentRouteKey = location.pathname.split('/').pop() || 'payments';
-  const currentRouteName =
-    Object.keys(dictRoutesList).find((each) => each === currentRouteKey) ||
-    'Payments';
+  const context = useContext(NavbarTitleContext);
 
   return (
-    <nav className="border-b border-gray-200">
-      <div className="max-w-screen-xl flex flex-wrap items-center justify-between mx-auto p-4">
-        <span className="self-center text-2xl font-semibold whitespace-nowrap">
-          {currentRouteName}
+    <nav className="border-b border-gray-200 bg-white shadow-sm">
+      <div className="max-w-screen-xl flex items-center justify-between mx-auto p-4">
+        <span className="text-2xl font-semibold text-gray-800">
+          {context?.title}
         </span>
         {location.pathname !== '/' && (
           <button
             onClick={() => navigate(-1)}
             type="button"
-            className="inline-flex items-center text-4xl justify-center text-gray-500 rounded-lg focus:outline-none"
+            className="inline-flex items-center text-2xl text-gray-600 hover:text-gray-800 focus:outline-none"
             aria-label="Go Back"
           >
-            <CiSquareChevRight />
+            <CiSquareChevRight className="mr-2" />
           </button>
         )}
       </div>

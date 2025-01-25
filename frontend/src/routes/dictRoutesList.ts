@@ -1,5 +1,6 @@
 export default {
-    payments: 'Payments',
-    'payment-detail': 'Payment Detail',
-    notFound: 'Not Found',
-}
+    '/': 'Payments',
+    '/payment-detail/:id': 'Payment Detail',
+    '/ui-test': 'UI Test',
+    '*': 'Not Found',
+} as const;

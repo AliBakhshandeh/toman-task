@@ -5,6 +5,7 @@ import { lazy } from 'react';
 const PaymentsPage = Loadable(lazy(() => import('@/pages/payments')));
 const PaymentDetailPage = Loadable(lazy(() => import('@/pages/paymentDetail')));
 const NotFoundPage = Loadable(lazy(() => import('@/pages/errors/notFound')));
+const UITestPage = Loadable(lazy(() => import('@/pages/ui-test')));
 
 const PaymentsRoutes = {
   path: '/',
@@ -17,6 +18,10 @@ const PaymentsRoutes = {
     {
       path: '/payment-detail/:id',
       element: <PaymentDetailPage />,
+    },
+    {
+      path: '/ui-test',
+      element: <UITestPage />,
     },
     {
       path: '*',
