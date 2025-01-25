@@ -12,7 +12,7 @@ const useNavbarTitleContext = (title: string) => {
 
   useEffect(() => {
     context.setTitle(title);
-  }, [title]); // Update title whenever it changes
+  }, [title]);
 };
 
 export default useNavbarTitleContext;
