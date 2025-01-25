@@ -1,5 +1,5 @@
 import { NavbarTitleContext } from '@/contexts/navbarTitle';
-import { useContext } from 'react';
+import { memo, useContext } from 'react';
 import { CiSquareChevRight } from 'react-icons/ci';
 import { useLocation, useNavigate } from 'react-router';
 
@@ -29,4 +29,4 @@ const Navbar = () => {
   );
 };
 
-export default Navbar;
+export default memo(Navbar);
