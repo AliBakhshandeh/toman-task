@@ -1,3 +1,5 @@
+import { Option } from "@/components/ui-components/dropdown/dropdown.types"
+
 export enum PaymentType {
     salary = 'salary',
     bonus = 'bonus',
@@ -31,6 +33,7 @@ export enum PaymentType {
       search?: string;
       type?: PaymentType[];
       status?: PaymentStatus[];
+      limit?: Option;
   }
   export interface PaymentParams {
     id: string

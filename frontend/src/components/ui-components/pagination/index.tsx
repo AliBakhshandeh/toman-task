@@ -22,7 +22,7 @@ const Pagination: React.FC<PaginationProps> = ({
   };
 
   return (
-    <div className="mt-5 overflow-x-auto">
+    <div className="overflow-x-auto">
       <ul className="flex items-center -space-x-px h-8 gap-x-3 text-sm">
         <li>
           <button

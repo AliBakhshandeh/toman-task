@@ -8,6 +8,7 @@ export const getPayments = async ({
   search,
   type,
   status,
+  limit
 }: IPaymentsParams): Promise<PaymentsResponse> => {
   try {
     const response = await axiosInstance.get('/payments', {
@@ -16,6 +17,7 @@ export const getPayments = async ({
         search,
         type: type?.join(','),
         status: status?.join(','),
+        limit: limit?.value,
       }),
     });
     return response.data;

@@ -8,10 +8,11 @@ export const usePaymentsList = ({
   search,
   type,
   status,
+  limit,
 }: IPaymentsParams) => {
   return useQuery<PaymentsResponse, Error>({
-    queryKey: ['payments', page,search,type,status],
-    queryFn: () => getPayments({ page, search, type, status }),
+    queryKey: ['payments', page,search,type,status,limit],
+    queryFn: () => getPayments({ page, search, type, status,limit }),
   });
 };
 

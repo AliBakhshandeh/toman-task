@@ -9,6 +9,7 @@ const SearchSection = Loadable(
 );
 const TableSection = Loadable(lazy(() => import('./components/tableSection')));
 
+import { Option } from '@/components/ui-components/dropdown/dropdown.types';
 import useNavbarTitleContext from '@/contexts/navbarTitle/useNavbarTitleContext';
 import { serializePayments } from '@/pages/payments/utils';
 import { PaymentStatus, PaymentType } from '@/types/payments.types';
@@ -18,6 +19,7 @@ import { useLocation, useNavigate } from 'react-router';
 type Filters = {
   page: number;
   search: string;
+  pageSize: Option;
   type: PaymentType[];
   status: PaymentStatus[];
 };
@@ -27,11 +29,13 @@ type Action =
   | { type: 'SET_SEARCH'; payload: string }
   | { type: 'SET_TYPE'; payload: PaymentType[] }
   | { type: 'SET_STATUS'; payload: PaymentStatus[] }
+  | { type: 'SET_PAGE_SIZE'; payload: Option }
   | { type: 'RESET' };
 
 const initialState: Filters = {
   page: 1,
   search: '',
+  pageSize: { value: '20', label: '20' },
   type: [],
   status: [],
 };
@@ -46,6 +50,9 @@ const filtersReducer = (state: Filters, action: Action): Filters => {
       return { ...state, type: action.payload, page: 1 };
     case 'SET_STATUS':
       return { ...state, status: action.payload, page: 1 };
+    case 'SET_PAGE_SIZE':
+      return { ...state, pageSize: action.payload, page: 1 };
+
     case 'RESET':
       return initialState;
     default:
@@ -59,11 +66,19 @@ const PaymentsPage = () => {
   const location = useLocation();
   const urlParams = new URLSearchParams(location.search);
 
-  const initialFilters = useMemo(
-    () => ({
+  const initialFilters = useMemo(() => {
+    const limit = urlParams.get('limit') as string;
+    const pageSize =
+      +limit < 10 ? '10' : +limit > 50 ? '50' : limit.toString() || '10';
+
+    return {
       ...initialState,
       page: Number(urlParams.get('page')) || 1,
       search: urlParams.get('search') || '',
+      pageSize: {
+        value: pageSize,
+        label: pageSize,
+      },
       type:
         urlParams
           .get('type')
@@ -74,13 +89,15 @@ const PaymentsPage = () => {
           .get('status')
           ?.split(',')
           .map((v) => v as PaymentStatus) || [],
-    }),
-    [urlParams]
-  );
+    };
+  }, [urlParams]);
 
   const [filters, dispatch] = useReducer(filtersReducer, initialFilters);
 
-  const { data, isLoading, isFetching, isError } = usePaymentsList(filters);
+  const { data, isLoading, isFetching, isError } = usePaymentsList({
+    ...filters,
+    limit: filters.pageSize,
+  });
 
   const headers = useMemo(
     () => ['Type', 'Value', 'Paid At', 'Status', 'Description', ''],
@@ -98,6 +115,7 @@ const PaymentsPage = () => {
     debounce(() => {
       const newParams = new URLSearchParams();
       newParams.set('page', String(filters.page));
+      newParams.set('limit', String(filters.pageSize.value));
       if (filters.search) newParams.set('search', filters.search);
       if (filters.type.length) newParams.set('type', filters.type.join(','));
       if (filters.status.length)
@@ -106,7 +124,11 @@ const PaymentsPage = () => {
     }, 500),
     [filters, navigate]
   );
-
+  const handlePageSizeChange = useCallback(
+    (newPageSize: Option) =>
+      dispatch({ type: 'SET_PAGE_SIZE', payload: newPageSize }),
+    []
+  );
   useEffect(() => {
     debouncedUpdateURL();
     return () => debouncedUpdateURL.cancel();
@@ -166,6 +188,8 @@ const PaymentsPage = () => {
         filters={filters}
         tableData={tableData}
         handlePageChange={handlePageChange}
+        pageSize={filters.pageSize}
+        setPageSize={handlePageSizeChange}
       />
     </div>
   );

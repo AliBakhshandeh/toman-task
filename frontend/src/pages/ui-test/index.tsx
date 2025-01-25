@@ -7,9 +7,10 @@ import { CiEdit } from 'react-icons/ci';
 
 const UITestPage = () => {
   const [currentPage, setCurrentPage] = useState(1);
-  const [singleSelectValue, setSingleSelectValue] = useState<Option | null>(
-    null
-  );
+  const [singleSelectValue, setSingleSelectValue] = useState<Option | null>({
+    value: 'esfahan',
+    label: 'esfahan',
+  });
   const [multiSelectValue, setMultiSelectValue] = useState<string[]>([]);
 
   const totalOrders = 150;

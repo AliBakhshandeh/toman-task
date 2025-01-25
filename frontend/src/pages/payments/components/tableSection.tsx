@@ -1,11 +1,15 @@
+import { DropDown } from '@/components/ui-components';
 import Pagination from '@/components/ui-components/pagination';
 import Table from '@/components/ui-components/table';
 import { TableProps } from '@/components/ui-components/table/table.types';
 import Shimmer from '@/pages/payments/components/shimmer';
 
 import { PaymentsResponse } from '@/types/payments.types';
-import React from 'react';
-
+import React, { useMemo } from 'react';
+interface Options {
+  value: string;
+  label: string;
+}
 interface TableSectionProps {
   isLoading: boolean;
   isError: boolean;
@@ -16,6 +20,8 @@ interface TableSectionProps {
   };
   tableData: TableProps['data'];
   handlePageChange: (page: number) => void;
+  pageSize: Options;
+  setPageSize: (pageSize: Options) => void;
 }
 
 const TableSection: React.FC<TableSectionProps> = ({
@@ -26,7 +32,17 @@ const TableSection: React.FC<TableSectionProps> = ({
   filters,
   tableData,
   handlePageChange,
+  pageSize,
+  setPageSize,
 }) => {
+  const options = useMemo(
+    () => [
+      { value: '10', label: '10' },
+      { value: '20', label: '20' },
+      { value: '50', label: '50' },
+    ],
+    []
+  );
   return (
     <>
       {isLoading ? (
@@ -40,12 +56,21 @@ const TableSection: React.FC<TableSectionProps> = ({
           ) : data && data.entities.length > 0 ? (
             <>
               <Table headers={headers} data={tableData} />
-              <div className="w-full flex justify-end">
+              <div className="w-full flex flex-wrap items-center justify-start gap-2">
                 <Pagination
                   currentPage={filters.page}
                   totalOrders={data.total}
                   itemsPerPage={data.limit}
                   action={handlePageChange}
+                />
+                <DropDown
+                  options={options}
+                  value={pageSize}
+                  onChange={(value) => setPageSize(value as Options)}
+                  placeholder=""
+                  isMultiSelect={false}
+                  isShowSearch={false}
+                  className="w-full sm:w-auto"
                 />
               </div>
             </>
