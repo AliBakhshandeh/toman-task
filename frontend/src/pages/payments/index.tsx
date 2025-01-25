@@ -1,11 +1,4 @@
-import {
-  lazy,
-  useCallback,
-  useEffect,
-  useMemo,
-  useReducer,
-  useRef,
-} from 'react';
+import { lazy, useCallback, useEffect, useMemo, useReducer } from 'react';
 
 import { usePaymentsList } from '@/apis/payment/payment.rq';
 import Loadable from '@/components/loadable';
@@ -65,9 +58,7 @@ const PaymentsPage = () => {
   const navigate = useNavigate();
   const location = useLocation();
   const urlParams = new URLSearchParams(location.search);
-  const refRe = useRef(0);
-  refRe.current + 1;
-  console.log(refRe);
+
   const initialFilters = useMemo(
     () => ({
       ...initialState,
