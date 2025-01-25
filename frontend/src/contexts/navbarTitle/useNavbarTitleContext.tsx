@@ -1,7 +1,7 @@
 import { useContext, useEffect } from 'react';
 import { NavbarTitleContext } from '@/contexts/navbarTitle';
 
-const useNavbarTitleContext = (title: string) => {
+const useNavbarTitleContext = (title: string): string => {
   const context = useContext(NavbarTitleContext);
 
   if (!context) {
@@ -12,7 +12,9 @@ const useNavbarTitleContext = (title: string) => {
 
   useEffect(() => {
     context.setTitle(title);
-  }, [title]);
+  }, []);
+
+  return context.title;
 };
 
 export default useNavbarTitleContext;

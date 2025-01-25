@@ -54,7 +54,7 @@ const filtersReducer = (state: Filters, action: Action): Filters => {
 };
 
 const PaymentsPage = () => {
-  useNavbarTitleContext('Payments');
+  const title = useNavbarTitleContext('Payments');
   const navigate = useNavigate();
   const location = useLocation();
   const urlParams = new URLSearchParams(location.search);
@@ -146,7 +146,7 @@ const PaymentsPage = () => {
   return (
     <div className="p-4 space-y-4">
       <div className="flex gap-2 items-center">
-        <span className="text-lg font-semibold text-gray-700">Payments</span>
+        <span className="text-lg font-semibold text-gray-700">{title}</span>
         {isFetching && <Spinner size={20} />}
       </div>
 

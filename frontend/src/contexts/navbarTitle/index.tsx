@@ -16,7 +16,7 @@ interface NavbarTitleProviderProps {
 export const NavbarTitleProvider: React.FC<NavbarTitleProviderProps> = ({
   children,
 }) => {
-  const [title, setTitle] = useState<string>('Unknown Page');
+  const [title, setTitle] = useState<string>('');
 
   return (
     <NavbarTitleContext.Provider value={{ title, setTitle }}>

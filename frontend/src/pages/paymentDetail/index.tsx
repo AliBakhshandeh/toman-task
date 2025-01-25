@@ -3,9 +3,11 @@ import { getStatusColor } from '@/pages/payments/utils';
 import { formatDate } from '@/utils';
 import { useParams } from 'react-router';
 import Shimmer from './components/shimmer';
+import useNavbarTitleContext from '@/contexts/navbarTitle/useNavbarTitleContext';
 
 const PaymentDetails = () => {
   const { id } = useParams<{ id: string }>();
+  const title = useNavbarTitleContext('Payment Details');
 
   const { data, isLoading, error } = usePaymentDetails({ id: id as string });
 
@@ -31,7 +33,7 @@ const PaymentDetails = () => {
 
   return (
     <div className="w-full mx-auto mt-5 p-6 bg-white shadow-lg rounded-lg border border-gray-200">
-      <h1 className="text-xl font-bold text-gray-700 mb-4">Payment Details</h1>
+      <h1 className="text-xl font-bold text-gray-700 mb-4">{title}</h1>
       <div className="text-sm text-gray-600 space-y-2">
         <div>
           <span className="font-semibold text-gray-800">ID: </span>
