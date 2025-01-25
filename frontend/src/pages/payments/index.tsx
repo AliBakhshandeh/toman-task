@@ -1,4 +1,11 @@
-import { lazy, useCallback, useEffect, useMemo, useReducer } from 'react';
+import {
+  lazy,
+  useCallback,
+  useEffect,
+  useMemo,
+  useReducer,
+  useRef,
+} from 'react';
 
 import { usePaymentsList } from '@/apis/payment/payment.rq';
 import Loadable from '@/components/loadable';
@@ -9,6 +16,7 @@ const SearchSection = Loadable(
 );
 const TableSection = Loadable(lazy(() => import('./components/tableSection')));
 
+import useNavbarTitleContext from '@/contexts/navbarTitle/useNavbarTitleContext';
 import { serializePayments } from '@/pages/payments/utils';
 import { PaymentStatus, PaymentType } from '@/types/payments.types';
 import { debounce } from '@/utils';
@@ -53,9 +61,13 @@ const filtersReducer = (state: Filters, action: Action): Filters => {
 };
 
 const PaymentsPage = () => {
+  useNavbarTitleContext('Payments');
   const navigate = useNavigate();
   const location = useLocation();
   const urlParams = new URLSearchParams(location.search);
+  const refRe = useRef(0);
+  refRe.current + 1;
+  console.log(refRe);
   const initialFilters = useMemo(
     () => ({
       ...initialState,
@@ -87,7 +99,7 @@ const PaymentsPage = () => {
     if (!data) return [];
     return serializePayments({
       data: data.entities || [],
-      viewDetailsOnClick: (id: string) => navigate(`/payment-details/${id}`),
+      viewDetailsOnClick: (id: string) => navigate(`/payment-detail/${id}`),
     });
   }, [data, navigate]);
 
