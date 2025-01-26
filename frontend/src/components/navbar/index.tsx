@@ -18,7 +18,7 @@ const Navbar = () => {
           <button
             onClick={() => navigate(-1)}
             type="button"
-            className="inline-flex items-center text-2xl text-gray-600 hover:text-gray-800 focus:outline-none"
+            className="inline-flex items-center text-2xl text-gray-600 hover:text-gray-800 focus:outline-none cursor-pointer"
             aria-label="Go Back"
           >
             <CiSquareChevRight className="mr-2" />

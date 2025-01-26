@@ -39,7 +39,7 @@ export const serializePayments = ({
     item.description || '',
     <Button
       key={item.id}
-      className="p-1 text-blue-900 text-lg hover:text-white bg-blue-300 hover:bg-blue-500 transition-all rounded-full"
+      className="p-1 text-blue-900 text-lg hover:text-white bg-blue-300 hover:bg-blue-500 transition-all rounded-full cursor-pointer"
       onClick={() => viewDetailsOnClick(item.id)}
     >
       <CiRead />
